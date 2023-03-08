@@ -1,4 +1,10 @@
+import { useContext } from 'react';
+import { GlobalContext } from '@/context/GlobalState';
+
 function Transaction({ id, amount, text }) {
+  const context = useContext(GlobalContext);
+  const { deleteTransaction } = context;
+  console.log(deleteTransaction);
   const sign = amount < 0 ? '-' : '+';
   const borderClr = sign === '-' ? 'border-red-600' : 'border-green-600';
   return (
@@ -10,7 +16,10 @@ function Transaction({ id, amount, text }) {
       <span className=" text-right ">
         {sign}${Math.abs(amount)}
       </span>
-      <button className="hidden group-hover:block absolute top-1 left-[-15px] bg-red-400 w-5 text-white">
+      <button
+        onClick={() => deleteTransaction(id)}
+        className="hidden group-hover:block absolute top-1 left-[-15px] bg-red-400 w-5 text-white"
+      >
         x
       </button>
     </li>
