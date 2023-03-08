@@ -4,7 +4,7 @@ import { GlobalContext } from '@/context/GlobalState';
 function Transaction({ id, amount, text }) {
   const context = useContext(GlobalContext);
   const { deleteTransaction } = context;
-  console.log(deleteTransaction);
+
   const sign = amount < 0 ? '-' : '+';
   const borderClr = sign === '-' ? 'border-red-600' : 'border-green-600';
   return (

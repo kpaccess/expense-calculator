@@ -3,28 +3,7 @@ import AppReducer from './appReducer';
 
 // Initial state
 const initialState = {
-  transactions: [
-    {
-      id: 1,
-      text: 'Flower',
-      amount: -20,
-    },
-    {
-      id: 2,
-      text: 'Salary',
-      amount: 300,
-    },
-    {
-      id: 3,
-      text: 'Book',
-      amount: -10,
-    },
-    {
-      id: 4,
-      text: 'Camera',
-      amount: 150,
-    },
-  ],
+  transactions: [],
 };
 
 // Create context
@@ -32,6 +11,7 @@ export const GlobalContext = createContext(initialState);
 
 export const Action = {
   deleteTransaction: 'DELETE_TRANSACTION',
+  addTransaction: 'ADD_TRANSACTION',
 };
 
 // Provider component
@@ -39,10 +19,20 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // Actions
+
+  // Delete Transaction
   function deleteTransaction(id) {
     dispatch({
       type: Action.deleteTransaction,
       payload: id,
+    });
+  }
+
+  // Add Transaction
+  function addTransaction(transaction) {
+    dispatch({
+      type: Action.addTransaction,
+      payload: transaction,
     });
   }
 
@@ -51,6 +41,7 @@ export const GlobalProvider = ({ children }) => {
       value={{
         transactions: state.transactions,
         deleteTransaction,
+        addTransaction,
       }}
     >
       {children}

@@ -1,13 +1,32 @@
-import { useState } from "react";
+import { useState, useContext } from 'react';
+import { GlobalContext } from '@/context/GlobalState';
+
+function generateId() {
+  return Math.floor(Math.random() * 100000000);
+}
 
 function AddTransaction() {
-  const [text, setText] = useState("Enter text ...");
+  const context = useContext(GlobalContext);
+
+  const { addTransaction } = context;
+
+  const [text, setText] = useState('');
   const [amount, setAmount] = useState(0);
-  console.log(amount);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const newTransaction = {
+      id: generateId(),
+      text,
+      amount: +amount,
+    };
+    addTransaction(newTransaction);
+  };
+
   return (
     <div className="mt-10">
       <h3 className=" border-b-2 border-gray-200">Add new transaction</h3>
-      <form className="mt-4">
+      <form className="mt-4" onSubmit={onSubmit}>
         <div className="flex flex-col">
           <label htmlFor="text" className="mb-4">
             Text
@@ -17,6 +36,7 @@ function AddTransaction() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             className="pl-4 border-gray-200"
+            placeholder="Enter text..."
           />
         </div>
         <div className="mt-1 flex flex-col">

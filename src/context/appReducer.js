@@ -6,8 +6,13 @@ const appReducer = (state, action) => {
       return {
         ...state,
         transactions: state.transactions.filter(
-          (transcition) => transcition.id !== action.payload
+          (transaction) => transaction.id !== action.payload
         ),
+      };
+    case Action.addTransaction:
+      return {
+        ...state,
+        transactions: [action.payload, ...state.transactions],
       };
     default:
       return state;
